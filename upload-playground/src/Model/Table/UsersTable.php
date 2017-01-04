@@ -68,6 +68,12 @@ class UsersTable extends Table
             ->notEmpty('role');
 
         $validator
+            ->add('photo', 'extension', [
+                'rule' => [
+                    'extension', ['png']
+                ],
+                'message' => 'Only PNG images are allowed.'
+            ])
             ->allowEmpty('photo');
 
         $validator
