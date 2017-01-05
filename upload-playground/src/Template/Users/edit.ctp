@@ -19,8 +19,9 @@
             echo $this->Form->input('username');
             echo $this->Form->input('password');
             echo $this->Form->input('role');
-            echo $this->Form->input('photo');
-            echo $this->Form->input('dir');
+            echo $this->Form->input('photo', [
+                'type' => 'file'
+            ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

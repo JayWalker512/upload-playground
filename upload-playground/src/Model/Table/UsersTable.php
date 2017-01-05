@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Utility\Inflector;
 
 /**
  * Users Model
@@ -36,6 +37,12 @@ class UsersTable extends Table
         $this->addBehavior('Josegonzalez/Upload.Upload', [
             'photo' => [
                 'path' => 'static{DS}{model}{DS}{field}',
+                //'pathProcessor' => 'Josegonzalez\Upload\File\Path\DefaultProcessor',
+                //'transformer' => 'Josegonzalez\Upload\File\Transformer\SlugTransformer', //transformer fires AFTER path processor. Only affects filenames
+                'nameCallback' => function($data, $settings) { 
+                    //namecallback occurs BEFORE SAVE
+                    return Inflector::slug($data['name'], '-'); 
+                }
             ]
         ]);
     }
@@ -67,20 +74,34 @@ class UsersTable extends Table
             ->requirePresence('role', 'create')
             ->notEmpty('role');
 
+        $validator->provider('upload', \Josegonzalez\Upload\Validation\UploadValidation::class);
+        
         $validator
             ->add('photo', 'extension', [
                 'rule' => [
-                    'extension', ['png']
+                    'extension', ['png', 'jpg', 'jpeg']
                 ],
-                'message' => 'Only PNG images are allowed.'
+                'message' => 'Only PNG, JPG, and JPEG images are allowed.'
             ])
             ->add('photo', 'fileSize', [
                 'rule' => [
-                    'fileSize', '<', '1mb'
+                    'fileSize', '<', '64MB'
                 ],
-                'message' => 'Files must be less than 1mb'
+                'message' => 'Files must be less than 64MB.'
             ])
-            ->allowEmpty('photo');
+            ->add('photo', 'mimeType', [
+                'rule' => [
+                    'mimeType', ['image/jpeg', 'image/png']
+                ],
+                'message' => 'The provided MIME type is not allowed.'
+            ])
+            ->add('photo', 'isfileUnderPhpSizeLimit', [
+                'rule' => 'isUnderPhpSizeLimit',
+                'message' => 'This file is too large',
+                'provider' => 'upload'
+            ])
+            ->requirePresence('photo', 'create')
+            ->allowEmpty('photo', 'update');
 
         $validator
             ->allowEmpty('dir');
