@@ -6,6 +6,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Utility\Inflector;
+use App\File\Transformer\HashedPngTransformer;
 
 /**
  * Users Model
@@ -41,8 +42,10 @@ class UsersTable extends Table
                 //'transformer' => 'Josegonzalez\Upload\File\Transformer\SlugTransformer', //transformer fires AFTER path processor. Only affects filenames
                 'nameCallback' => function($data, $settings) { 
                     //namecallback occurs BEFORE SAVE
-                    return Inflector::slug($data['name'], '-'); 
-                }
+                    
+                    return (string)rand(0, 100) . '.png'; 
+                },
+                'transformer' => 'App\File\Transformer\HashedPngTransformer'
             ]
         ]);
     }
