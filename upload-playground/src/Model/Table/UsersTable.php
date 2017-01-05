@@ -74,6 +74,12 @@ class UsersTable extends Table
                 ],
                 'message' => 'Only PNG images are allowed.'
             ])
+            ->add('photo', 'fileSize', [
+                'rule' => [
+                    'fileSize', '<', '1mb'
+                ],
+                'message' => 'Files must be less than 1mb'
+            ])
             ->allowEmpty('photo');
 
         $validator
