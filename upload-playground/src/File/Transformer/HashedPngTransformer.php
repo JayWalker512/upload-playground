@@ -74,11 +74,13 @@ class HashedPngTransformer implements TransformerInterface
      */
     public function transform()
     {
-        xdebug_break();
+        //xdebug_break();
         
         //here we create the new files, convert jpgs to pngs
+        imagepng(imagecreatefromstring(file_get_contents($this->data['tmp_name'])), $this->data['tmp_name'] . 'png');
         return [
-            $this->data['tmp_name'] => $this->data['name']
+            $this->data['tmp_name'] . 'png' => $this->data['name'],
+            $this->data['tmp_name'] => $this->data['name'] . '.original'
         ];
     }
 }

@@ -42,8 +42,8 @@ class UsersTable extends Table
                 //'transformer' => 'Josegonzalez\Upload\File\Transformer\SlugTransformer', //transformer fires AFTER path processor. Only affects filenames
                 'nameCallback' => function($data, $settings) { 
                     //namecallback occurs BEFORE SAVE
-                    
-                    return (string)rand(0, 100) . '.png'; 
+                    //return (string)rand(0, 100) . '.png';
+                    return hash_file("md5", $data['tmp_name']) . ".png";
                 },
                 'transformer' => 'App\File\Transformer\HashedPngTransformer'
             ]
