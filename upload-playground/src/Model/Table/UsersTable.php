@@ -21,6 +21,10 @@ use App\File\Transformer\HashedPngTransformer;
  */
 class UsersTable extends Table
 {
+    
+    /*public static function defaultConnectionName() {
+        return 'upload_playground_dupe';
+    }*/
 
     /**
      * Initialize method

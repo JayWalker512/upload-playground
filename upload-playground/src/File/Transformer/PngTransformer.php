@@ -5,7 +5,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Table;
 use Josegonzalez\Upload\File\Transformer\TransformerInterface;
 
-class HashedPngTransformer implements TransformerInterface
+class PngTransformer implements TransformerInterface
 {
     /**
      * Table instance.
@@ -74,13 +74,10 @@ class HashedPngTransformer implements TransformerInterface
      */
     public function transform()
     {
-        //xdebug_break();
-        
-        //here we create the new files, convert jpgs to pngs
+        //here we create the new file(s), convert jpgs to pngs
         imagepng(imagecreatefromstring(file_get_contents($this->data['tmp_name'])), $this->data['tmp_name'] . 'png');
         return [
             $this->data['tmp_name'] . 'png' => $this->data['name'],
-            $this->data['tmp_name'] => $this->data['name'] . '.original'
         ];
     }
 }
