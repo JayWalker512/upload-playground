@@ -49,7 +49,7 @@ class UsersTable extends Table
                     //return (string)rand(0, 100) . '.png';
                     return hash_file("md5", $data['tmp_name']) . ".png";
                 },
-                'transformer' => 'App\File\Transformer\HashedPngTransformer'
+                'transformer' => 'App\File\Transformer\PngTransformer'
             ]
         ]);
     }
