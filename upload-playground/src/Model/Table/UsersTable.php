@@ -6,7 +6,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Utility\Inflector;
-use App\File\Transformer\HashedPngTransformer;
+use App\File\Transformer\PngTransformer;
+use Search\Manager;
 
 /**
  * Users Model
@@ -52,6 +53,19 @@ class UsersTable extends Table
                 'transformer' => 'App\File\Transformer\PngTransformer'
             ]
         ]);
+                
+        $this->addBehavior('Search.Search');
+        $this->searchManager()
+            //->value('name')
+            ->add('q', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'fieldMode' => 'OR',
+                'comparison' => 'LIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => ['name', 'id', 'photo']
+            ]);
     }
 
     /**

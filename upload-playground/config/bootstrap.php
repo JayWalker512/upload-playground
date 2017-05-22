@@ -222,3 +222,5 @@ if (Configure::read('debug')) {
 }
 
 Plugin::load('Josegonzalez/Upload');
+
+Plugin::load('Search');
