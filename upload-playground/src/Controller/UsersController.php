@@ -28,7 +28,6 @@ class UsersController extends AppController
      */
     public function index()
     {
-        
         $query = $this->Users->find('search', [
             'search' => $this->request->getQueryParams()
         ]);

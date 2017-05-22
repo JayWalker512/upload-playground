@@ -56,15 +56,27 @@ class UsersTable extends Table
                 
         $this->addBehavior('Search.Search');
         $this->searchManager()
-            //->value('searchString')
-            ->add('searchString', 'Search.Like', [
+            ->add('nameString', 'Search.Like', [
                 'before' => true,
                 'after' => true,
                 'fieldMode' => 'OR',
                 'comparison' => 'LIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => ['name', 'id', 'photo']
+                'field' => ['name']
+            ])
+            ->add('usernameString', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'fieldMode' => 'OR',
+                'comparison' => 'LIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => ['username']
+            ])
+            ->add('userId', 'Search.Compare', [
+                'operator' => '>', //looks like this is still performing GTE comparison?
+                'field' => ['id']
             ]);
     }
 

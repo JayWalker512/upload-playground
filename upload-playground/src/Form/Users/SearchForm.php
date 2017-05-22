@@ -17,12 +17,14 @@ class SearchForm extends Form
 {
     protected function _buildSchema(Schema $schema)
     {
-        return $schema->addField('searchString', 'string');
+        return $schema->addField('nameString', 'string')
+                    ->addField('usernameString', 'string')
+                    ->addField('userId', 'number');
     }
     
     protected function _buildValidator(Validator $validator)
     {
-        return $validator; //no rules!
+        return $validator->add('userId', 'number')->allowEmpty('userId');
     }
     
     protected function _execute(array $data)

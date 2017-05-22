@@ -5,7 +5,9 @@
     </ul>
     <?php 
     echo $this->Form->create($searchForm);
-    echo $this->Form->control('searchString');
+    echo $this->Form->control('nameString');
+    echo $this->Form->control('usernameString');
+    echo $this->Form->control('userId');
     echo $this->Form->button('Search');
     echo $this->Form->end();
     ?>
