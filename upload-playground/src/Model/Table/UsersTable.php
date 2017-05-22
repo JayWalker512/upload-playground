@@ -56,8 +56,8 @@ class UsersTable extends Table
                 
         $this->addBehavior('Search.Search');
         $this->searchManager()
-            //->value('name')
-            ->add('q', 'Search.Like', [
+            //->value('searchString')
+            ->add('searchString', 'Search.Like', [
                 'before' => true,
                 'after' => true,
                 'fieldMode' => 'OR',

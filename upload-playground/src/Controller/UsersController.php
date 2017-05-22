@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Form\Users\SearchForm;
 
 /**
  * Users Controller
@@ -11,6 +12,15 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        
+        $this->loadComponent('Search.Prg', [
+            'actions' => ['index']
+        ]);
+    }
+    
     /**
      * Index method
      *
@@ -18,11 +28,15 @@ class UsersController extends AppController
      */
     public function index()
     {
+        
         $query = $this->Users->find('search', [
             'search' => $this->request->getQueryParams()
         ]);
         
         $users = $this->paginate($query);
+        
+        $searchForm = new SearchForm();
+        $this->set('searchForm', $searchForm);
 
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);

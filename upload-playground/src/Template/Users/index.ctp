@@ -3,6 +3,12 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
     </ul>
+    <?php 
+    echo $this->Form->create($searchForm);
+    echo $this->Form->control('searchString');
+    echo $this->Form->button('Search');
+    echo $this->Form->end();
+    ?>
 </nav>
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Users') ?></h3>
