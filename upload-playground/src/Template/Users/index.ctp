@@ -8,7 +8,7 @@
     echo $this->Form->control('nameString');
     echo $this->Form->control('usernameString');
     echo $this->Form->control('userId');
-    echo $this->Form->control('role', ['options' => $roles]);
+    echo $this->Form->control('role', ['options' => $roles, 'empty' => 'Any']);
     echo $this->Form->button('Search');
     echo $this->Form->end();
     ?>
