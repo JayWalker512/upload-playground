@@ -33,11 +33,15 @@ class UsersController extends AppController
         ]);
         
         $users = $this->paginate($query);
+        $roles = $this->Users->find('list', [
+            'keyField' => 'role',
+            'valueField' => 'role'
+        ])->select(['role']);
         
         $searchForm = new SearchForm();
         $this->set('searchForm', $searchForm);
 
-        $this->set(compact('users'));
+        $this->set(compact('users', 'roles'));
         $this->set('_serialize', ['users']);
     }
 

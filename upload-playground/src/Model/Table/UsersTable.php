@@ -77,6 +77,12 @@ class UsersTable extends Table
             ->add('userId', 'Search.Compare', [
                 'operator' => '>', //looks like this is still performing GTE comparison?
                 'field' => ['id']
+            ])
+            ->add('role', 'Search.Like', [
+                'before' => false,
+                'after' => false,
+                'fieldMode' => 'AND',
+                'comparison' => '='
             ]);
     }
 
