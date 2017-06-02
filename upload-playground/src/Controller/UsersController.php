@@ -32,7 +32,7 @@ class UsersController extends AppController
             'search' => $this->request->getQueryParams()
         ]);
         
-        $users = $this->paginate($users);
+        //$users = $this->paginate($users);
         $roles = $this->Users->find('list', [
             'keyField' => 'role',
             'valueField' => 'role'
