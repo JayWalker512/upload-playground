@@ -41,7 +41,11 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler', [
+            'viewClassMap' => [
+                'csv' => 'CsvView.Csv'
+            ]
+        ]);
         $this->loadComponent('Flash');
 
         /*

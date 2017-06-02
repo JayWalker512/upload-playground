@@ -11,7 +11,7 @@ use App\Form\Users\SearchForm;
  */
 class UsersController extends AppController
 {
-
+    
     public function initialize()
     {
         parent::initialize();
@@ -28,21 +28,34 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $query = $this->Users->find('search', [
+        $users = $this->Users->find('search', [
             'search' => $this->request->getQueryParams()
         ]);
         
-        $users = $this->paginate($query);
+        $users = $this->paginate($users);
         $roles = $this->Users->find('list', [
             'keyField' => 'role',
             'valueField' => 'role'
         ])->select(['role']);
-        
+            
         $searchForm = new SearchForm();
         $this->set('searchForm', $searchForm);
-
+        
         $this->set(compact('users', 'roles'));
         $this->set('_serialize', ['users']);
+        
+        //if extension is present, download a CSV instead.
+        if ($this->request->getParam('_ext') === 'csv') {
+            $_header = array('Post ID', 'Name', 'Photo path');
+            $_extract = array('id', 'name', 'photo');
+
+            $this->RequestHandler->respondAs('csv');
+            $this->set(compact('_serialize', '_header', '_extract'));
+        } else {
+            
+
+            
+        }
     }
 
     /**
