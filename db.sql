@@ -11,8 +11,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #not yet added
-create table photos (
-	id UNSIGNED INT PRIMARY KEY,
+CREATE TABLE `photos` (
+	id INT UNSIGNED PRIMARY KEY,
 	photo_path VARCHAR(255),
 	time_added DATETIME NOT NULL
 );

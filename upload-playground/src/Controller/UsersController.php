@@ -31,8 +31,7 @@ class UsersController extends AppController
         $users = $this->Users->find('search', [
             'search' => $this->request->getQueryParams()
         ]);
-        
-        //$users = $this->paginate($users);
+
         $roles = $this->Users->find('list', [
             'keyField' => 'role',
             'valueField' => 'role'
@@ -41,21 +40,22 @@ class UsersController extends AppController
         $searchForm = new SearchForm();
         $this->set('searchForm', $searchForm);
         
-        $this->set(compact('users', 'roles'));
-        $this->set('_serialize', ['users']);
+        
         
         //if extension is present, download a CSV instead.
         if ($this->request->getParam('_ext') === 'csv') {
+            
             $_header = array('Post ID', 'Name', 'Photo path');
             $_extract = array('id', 'name', 'photo');
 
             $this->RequestHandler->respondAs('csv');
             $this->set(compact('_serialize', '_header', '_extract'));
         } else {
-            
-
-            
+            $users = $this->paginate($users);
         }
+        
+        $this->set(compact('users', 'roles'));
+        $this->set('_serialize', ['users']);
     }
 
     /**
