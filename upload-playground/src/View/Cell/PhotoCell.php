@@ -12,6 +12,10 @@ class PhotoCell extends Cell {
     
     public function display()
     {
-        
+        $this->loadModel('Users');
+        $numNoName = $this->Users->find('all')->where([
+            'name' => ''  
+        ])->count();
+        $this->set('numNoName', $numNoName);
     }
 }
