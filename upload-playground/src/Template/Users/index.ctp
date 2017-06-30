@@ -12,6 +12,9 @@
     echo $this->Form->button('Search');
     echo $this->Form->end();
     ?>
+    <div>
+        <?= $this->cell('Photo') ?>
+    </div>
 </nav>
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Users') ?></h3>
@@ -56,8 +59,5 @@
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-    <div>
-        <?= $this->cell('Photo') ?>
     </div>
 </div>
