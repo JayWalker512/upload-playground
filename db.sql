@@ -12,7 +12,7 @@ CREATE TABLE `users` (
 
 #not yet added
 CREATE TABLE `photos` (
-	id INT UNSIGNED PRIMARY KEY,
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	photo_path VARCHAR(255),
 	time_added DATETIME NOT NULL
 );

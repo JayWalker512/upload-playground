@@ -11,16 +11,25 @@ use App\Form\Users\SearchForm;
  */
 class UsersController extends AppController
 {
-    
+
+    public $paginate = [
+        'Users' => ['scope' => 'u'],
+        'Photos' => ['scope' => 'o']
+    ];
+
     public function initialize()
     {
         parent::initialize();
-        
+
         $this->loadComponent('Search.Prg', [
             'actions' => ['index']
         ]);
+
+        $this->loadComponent('Paginator');
+
+        $this->loadModel('Photos');
     }
-    
+
     /**
      * Index method
      *
@@ -36,15 +45,15 @@ class UsersController extends AppController
             'keyField' => 'role',
             'valueField' => 'role'
         ])->select(['role']);
-            
+
         $searchForm = new SearchForm();
         $this->set('searchForm', $searchForm);
-        
-        
-        
+
+
+
         //if extension is present, download a CSV instead.
         if ($this->request->getParam('_ext') === 'csv') {
-            
+
             $_header = array('Post ID', 'Name', 'Photo path');
             $_extract = array('id', 'name', 'photo');
 
@@ -53,9 +62,27 @@ class UsersController extends AppController
         } else {
             $users = $this->paginate($users);
         }
-        
+
         $this->set(compact('users', 'roles'));
         $this->set('_serialize', ['users']);
+    }
+
+    public function index2()
+    {
+        $roles = $this->Users->find('list', [
+            'keyField' => 'role',
+            'valueField' => 'role'
+        ])->select(['role']);
+
+        $searchForm = new SearchForm();
+        $this->set('searchForm', $searchForm);
+
+        xdebug_break();
+        $users = $this->paginate($this->Users, ['scope' => 'u']);
+        $others = $this->paginate($this->Photos, ['scope' => 'o']);
+
+        $this->set(compact('users', 'others', 'roles'));
+        $this->set('_serialize', ['users', 'others']);
     }
 
     /**
